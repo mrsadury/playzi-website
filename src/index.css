@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-black text-surface-light font-sans antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-aqua/30;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-aqua px-5 py-2.5 text-sm font-semibold text-black transition-all hover:bg-aqua-hover hover:shadow-lg hover:shadow-aqua/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn border border-dark-border bg-dark-card px-5 py-2.5 text-sm font-semibold text-surface-light transition-all hover:bg-dark-hover hover:border-aqua/40 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn px-4 py-2.5 text-sm font-medium text-surface-light/60 transition-all hover:bg-dark-hover hover:text-surface-light active:scale-[0.98];
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-red-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-red-600 active:scale-[0.98];
+  }
+
+  .input-field {
+    @apply w-full rounded-btn border border-dark-border bg-dark-card px-4 py-2.5 text-sm text-surface-light placeholder:text-surface-light/40 transition-all focus:border-aqua focus:outline-none focus:ring-2 focus:ring-aqua/20;
+  }
+
+  .card {
+    @apply rounded-card border border-dark-border bg-dark-card transition-all;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-card {
+    @apply rounded-card border border-dark-border bg-dark-card transition-all;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full;
+  background: #1f1f1f;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-aqua/50;
+}
+
+/* Skeleton shimmer */
+.shimmer {
+  @apply relative overflow-hidden;
+  background: #141414;
+}
+
+.shimmer::after {
+  content: '';
+  @apply absolute inset-0;
+  background: linear-gradient(90deg, transparent, rgba(120, 246, 225, 0.10), transparent);
+  animation: shimmerMove 1.5s infinite;
+}
+
+@keyframes shimmerMove {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Fullscreen game player styles */
+#game-player-container:fullscreen,
+#game-player-container:-webkit-full-screen {
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  border: none !important;
+  display: block !important;
+  background: #000 !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+#game-player-container:fullscreen > div,
+#game-player-container:-webkit-full-screen > div {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: unset !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+}
+
+#game-player-container:fullscreen iframe,
+#game-player-container:-webkit-full-screen iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+}
+
+/* Custom page content styling */
+.custom-page-content {
+  @apply text-sm leading-relaxed text-surface-light/80;
+}
+.custom-page-content h1 {
+  @apply text-2xl font-bold text-surface-light mt-6 mb-3;
+}
+.custom-page-content h2 {
+  @apply text-xl font-bold text-surface-light mt-5 mb-2;
+}
+.custom-page-content h3 {
+  @apply text-lg font-semibold text-surface-light mt-4 mb-2;
+}
+.custom-page-content h4, .custom-page-content h5, .custom-page-content h6 {
+  @apply text-base font-semibold text-surface-light mt-3 mb-2;
+}
+.custom-page-content p {
+  @apply mb-4 leading-relaxed;
+}
+.custom-page-content a {
+  @apply text-aqua underline transition-colors hover:text-aqua-hover;
+}
+.custom-page-content ul {
+  @apply mb-4 list-disc pl-6;
+}
+.custom-page-content ol {
+  @apply mb-4 list-decimal pl-6;
+}
+.custom-page-content li {
+  @apply mb-1;
+}
+.custom-page-content img {
+  @apply max-w-full h-auto rounded-card mb-4;
+}
+.custom-page-content table {
+  @apply w-full border-collapse mb-4;
+}
+.custom-page-content th, .custom-page-content td {
+  @apply border border-dark-border px-3 py-2 text-left;
+}
+.custom-page-content th {
+  @apply bg-dark-hover font-semibold text-surface-light;
+}
+.custom-page-content blockquote {
+  @apply border-l-4 border-aqua/40 pl-4 italic text-surface-light/60 mb-4;
+}
+.custom-page-content code {
+  @apply rounded bg-dark-hover px-1.5 py-0.5 text-xs text-aqua;
+}
+.custom-page-content pre {
+  @apply rounded-card bg-dark-hover p-4 overflow-x-auto mb-4;
+}
+.custom-page-content pre code {
+  @apply bg-transparent p-0;
+}
+.custom-page-content hr {
+  @apply border-dark-border my-6;
+}
+.custom-page-content strong {
+  @apply font-bold text-surface-light;
+}
+.custom-page-content em {
+  @apply italic;
+}

@@ -1,0 +1,2 @@
+[functions.import-games]
+verify_jwt = true
