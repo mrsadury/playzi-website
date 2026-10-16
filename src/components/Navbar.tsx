@@ -137,14 +137,13 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
               )}
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <Link to="/login" className="btn-secondary text-sm">
-                Login
-              </Link>
-              <Link to="/signup" className="btn-primary text-sm">
-                Sign Up
-              </Link>
-            </div>
+            <Link
+              to="/login"
+              className="flex h-10 w-10 items-center justify-center rounded-btn border border-dark-border bg-dark-card text-surface-light/80 transition-all hover:border-aqua/50 hover:text-aqua"
+              title="Login / Sign Up"
+            >
+              <User className="h-5 w-5" />
+            </Link>
           )}
         </div>
       </div>
