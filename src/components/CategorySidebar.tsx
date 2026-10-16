@@ -4,10 +4,11 @@ import {
   X, Search, Home, Gamepad2, Trophy, Flame, Sparkles,
   Swords, Compass, Car, Trophy as Whistle, Joystick,
   PencilRuler, Puzzle, Crown, Heart, Zap, Target, Shield,
-  Dice5, Rocket, Music, Bike, Plane,
+  Dice5, Rocket, Music, Bike, Plane, History,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { Category } from '@/types';
+import { getRecentlyPlayed, type RecentGameEntry } from '@/lib/recentlyPlayed';
 
 function getCategoryIcon(name: string) {
   const lower = name.toLowerCase();
@@ -52,6 +53,7 @@ interface CategorySidebarProps {
 export default function CategorySidebar({ open, onClose }: CategorySidebarProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [recentGames, setRecentGames] = useState<RecentGameEntry[]>([]);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -60,8 +62,16 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
       supabase.from('categories').select('*').eq('visible', true).order('sort_order', { ascending: true }).then(({ data }) => {
         setCategories((data as Category[]) || []);
       });
+      setRecentGames(getRecentlyPlayed());
     }
   }, [open]);
+
+  // Listen for recently played updates
+  useEffect(() => {
+    const handler = () => setRecentGames(getRecentlyPlayed());
+    window.addEventListener('playzi:recentGamesUpdated', handler);
+    return () => window.removeEventListener('playzi:recentGamesUpdated', handler);
+  }, []);
 
   // Close sidebar on route change - but only when path actually changes
   const prevPath = useRef(location.pathname);
@@ -168,6 +178,38 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
               })}
             </div>
           </div>
+
+          {/* Recently Played */}
+          {recentGames.length > 0 && (
+            <div className="mb-4">
+              <h3 className="mb-2 flex items-center gap-1.5 px-3 text-xs font-semibold uppercase tracking-wider text-surface-light/40">
+                <History className="h-3.5 w-3.5" />
+                Recently Played
+              </h3>
+              <div className="space-y-1">
+                {recentGames.map((game) => (
+                  <Link
+                    key={game.id}
+                    to={`/game/${game.slug}`}
+                    className="group flex items-center gap-3 rounded-btn px-3 py-2 text-sm font-medium text-surface-light/70 transition-all hover:bg-dark-hover hover:text-surface-light"
+                  >
+                    {game.thumbnail ? (
+                      <img
+                        src={game.thumbnail}
+                        alt=""
+                        className="h-8 w-8 shrink-0 rounded object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-dark-card">
+                        <Gamepad2 className="h-4 w-4 text-aqua" />
+                      </div>
+                    )}
+                    <span className="truncate">{game.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Categories */}
           <div>

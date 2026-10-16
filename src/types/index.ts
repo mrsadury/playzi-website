@@ -162,3 +162,18 @@ export interface CustomPage {
   created_at: string;
   updated_at: string;
 }
+
+export interface NewsArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  image_url: string | null;
+  author: string | null;
+  published: boolean;
+  featured: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}

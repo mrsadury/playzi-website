@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { TrendingUp, Sparkles, Clock, Gamepad2, ChevronRight } from 'lucide-react';
+import { TrendingUp, Sparkles, Clock, Gamepad2, ChevronRight, Newspaper } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import type { Game, Category } from '@/types';
-import FeaturedGameCard from '@/components/FeaturedGameCard';
+import type { Game, Category, NewsArticle } from '@/types';
+import FeaturedSlider from '@/components/FeaturedSlider';
 import GameGrid from '@/components/GameGrid';
 import SectionHeader from '@/components/SectionHeader';
 import CategoryCard from '@/components/CategoryCard';
+import NewsCard from '@/components/NewsCard';
 import { HeroSkeleton, GameGridSkeleton } from '@/components/Skeletons';
 import { EmptyState } from '@/components/States';
 
@@ -17,16 +18,18 @@ export default function HomePage() {
   const [recentGames, setRecentGames] = useState<Game[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({});
+  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const [featuredRes, popularRes, newRes, recentRes, catRes] = await Promise.all([
+      const [featuredRes, popularRes, newRes, recentRes, catRes, newsRes] = await Promise.all([
         supabase.from('games').select('*').eq('published', true).eq('featured', true).order('views', { ascending: false }).limit(5),
         supabase.from('games').select('*').eq('published', true).order('views', { ascending: false }).limit(12),
         supabase.from('games').select('*').eq('published', true).order('created_at', { ascending: false }).limit(12),
         supabase.from('games').select('*').eq('published', true).order('created_at', { ascending: false }).limit(8),
         supabase.from('categories').select('*').eq('visible', true).order('sort_order', { ascending: true }).limit(12),
+        supabase.from('news').select('*').eq('published', true).order('created_at', { ascending: false }).limit(4),
       ]);
 
       let featured = featuredRes.data as Game[] || [];
@@ -40,6 +43,7 @@ export default function HomePage() {
       setRecentGames((recentRes.data as Game[]) || []);
       const cats = (catRes.data as Category[]) || [];
       setCategories(cats);
+      setNewsArticles((newsRes.data as NewsArticle[]) || []);
 
       // Get game counts per category
       if (cats.length > 0) {
@@ -86,23 +90,16 @@ export default function HomePage() {
     );
   }
 
-  const [heroGame, ...restFeatured] = featuredGames;
+  const featuredNews = newsArticles.find((a) => a.featured) || null;
+  const otherNews = featuredNews ? newsArticles.filter((a) => a.id !== featuredNews.id) : newsArticles;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      {/* Hero */}
-      {heroGame && (
+      {/* Hero Slider */}
+      {featuredGames.length > 0 && (
         <div className="mb-8">
-          <FeaturedGameCard game={heroGame} />
+          <FeaturedSlider games={featuredGames} />
         </div>
-      )}
-
-      {/* Featured Games */}
-      {restFeatured.length > 0 && (
-        <section className="mb-10">
-          <SectionHeader title="Featured Games" linkTo="/games?sort=featured" linkLabel="View all" />
-          <GameGrid games={restFeatured} columns={5} />
-        </section>
       )}
 
       {/* Popular Games */}
@@ -136,6 +133,30 @@ export default function HomePage() {
             </span>
           </SectionHeader>
           <GameGrid games={newGames.slice(0, 10)} columns={5} />
+        </section>
+      )}
+
+      {/* News Section */}
+      {newsArticles.length > 0 && (
+        <section className="mb-10">
+          <SectionHeader title="Latest News">
+            <span className="hidden items-center gap-1 text-sm text-surface-light/50 sm:flex">
+              <Newspaper className="h-4 w-4 text-aqua" />
+              Updates
+            </span>
+          </SectionHeader>
+          {featuredNews && (
+            <div className="mb-4">
+              <NewsCard article={featuredNews} featured />
+            </div>
+          )}
+          {otherNews.length > 0 && (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {otherNews.slice(0, 3).map((article) => (
+                <NewsCard key={article.id} article={article} />
+              ))}
+            </div>
+          )}
         </section>
       )}
 

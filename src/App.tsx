@@ -33,7 +33,9 @@ import AdminAnalytics from '@/pages/admin/AdminAnalytics';
 import AdminReports from '@/pages/admin/AdminReports';
 import AdminUsers from '@/pages/admin/AdminUsers';
 import AdminPages from '@/pages/admin/AdminPages';
+import AdminNews from '@/pages/admin/AdminNews';
 import CustomPageView from '@/pages/CustomPageView';
+import NewsDetailPage from '@/pages/NewsDetailPage';
 
 export default function App() {
   return (
@@ -56,6 +58,7 @@ export default function App() {
                 <Route path="/profile/edit" element={<ProfileEditPage />} />
                 <Route path="/maintenance" element={<MaintenancePage />} />
                 <Route path="/p/:slug" element={<CustomPageView />} />
+                <Route path="/news/:slug" element={<NewsDetailPage />} />
               </Route>
 
               <Route path="/login" element={<LoginPage />} />
@@ -72,6 +75,7 @@ export default function App() {
               <Route path="/admin/reports" element={<AdminRoute><AdminLayout><AdminReports /></AdminLayout></AdminRoute>} />
               <Route path="/admin/users" element={<AdminRoute><AdminLayout><AdminUsers /></AdminLayout></AdminRoute>} />
               <Route path="/admin/pages" element={<AdminRoute><AdminLayout><AdminPages /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/news" element={<AdminRoute><AdminLayout><AdminNews /></AdminLayout></AdminRoute>} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

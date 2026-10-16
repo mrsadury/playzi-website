@@ -137,9 +137,14 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
               )}
             </div>
           ) : (
-            <Link to="/login" className="btn-primary hidden sm:inline-flex">
-              Sign In
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link to="/login" className="btn-secondary text-sm">
+                Login
+              </Link>
+              <Link to="/signup" className="btn-primary text-sm">
+                Sign Up
+              </Link>
+            </div>
           )}
         </div>
       </div>

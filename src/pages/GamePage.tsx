@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import type { Game } from '@/types';
 import { getSessionKey, formatNumber, formatDate, getImageFallback } from '@/lib/utils';
+import { addRecentlyPlayed } from '@/lib/recentlyPlayed';
 import GameGrid from '@/components/GameGrid';
 import SectionHeader from '@/components/SectionHeader';
 import { HeroSkeleton, GameGridSkeleton } from '@/components/Skeletons';
@@ -92,15 +93,20 @@ export default function GamePage() {
     })();
   }, [slug]);
 
-  // Track game view (once per session per game)
+  // Track game view (once per session per game) and update local view count
   useEffect(() => {
     if (game && !tracked) {
       setTracked(true);
       const sessionKey = getSessionKey();
+      addRecentlyPlayed(game);
       supabase.rpc('increment_game_view', {
         p_game_id: game.id,
         p_session_key: sessionKey,
         p_user_id: user?.id || null,
+      }).then(({ data }) => {
+        if (data === true) {
+          setGame((prev) => prev ? { ...prev, views: prev.views + 1 } : prev);
+        }
       });
     }
   }, [game, tracked, user]);

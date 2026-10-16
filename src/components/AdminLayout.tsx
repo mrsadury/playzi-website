@@ -16,6 +16,7 @@ import {
   Flag,
   Users,
   FileText,
+  Newspaper,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
@@ -30,6 +31,7 @@ const navItems = [
   { to: '/admin/reports', label: 'Reports', icon: Flag, end: false },
   { to: '/admin/users', label: 'Users', icon: Users, end: false },
   { to: '/admin/pages', label: 'Pages', icon: FileText, end: false },
+  { to: '/admin/news', label: 'News', icon: Newspaper, end: false },
   { to: '/admin/leaderboard', label: 'Leaderboard', icon: Trophy, end: false },
   { to: '/admin/settings', label: 'Settings', icon: Settings, end: false },
 ];
