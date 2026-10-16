@@ -99,6 +99,7 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
     { to: '/popular', label: 'Popular', icon: Flame },
     { to: '/new', label: 'New Games', icon: Sparkles },
     { to: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+  { to: '/favorites', label: 'Favorites', icon: Heart },
   ];
 
   const isQuickLinkActive = (to: string) => {

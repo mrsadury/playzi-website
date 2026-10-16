@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, Play, Maximize, Minimize, Eye, Gamepad2, Tag, X, Flag, RotateCw } from 'lucide-react';
+import { ChevronRight, Play, Maximize, Minimize, Eye, Gamepad2, Tag, X, Flag, RotateCw, Heart } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/context/AuthContext';
@@ -27,6 +27,8 @@ export default function GamePage() {
   const [iframeError, setIframeError] = useState(false);
   const [tracked, setTracked] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favLoading, setFavLoading] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [reportReason, setReportReason] = useState('inappropriate');
   const [reportDesc, setReportDesc] = useState('');
@@ -236,6 +238,45 @@ export default function GamePage() {
     }
   };
 
+  // Check if game is favorited
+  useEffect(() => {
+    if (!game || !user) return;
+    (async () => {
+      const { data } = await supabase
+        .from('favorites')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('game_id', game.id)
+        .maybeSingle();
+      setIsFavorited(!!data);
+    })();
+  }, [game, user]);
+
+  const toggleFavorite = async () => {
+    if (!game || !user) return;
+    setFavLoading(true);
+    if (isFavorited) {
+      const { error } = await supabase
+        .from('favorites')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('game_id', game.id);
+      if (!error) {
+        setIsFavorited(false);
+        showToast('Removed from favorites', 'success');
+      }
+    } else {
+      const { error } = await supabase
+        .from('favorites')
+        .insert({ user_id: user.id, game_id: game.id });
+      if (!error) {
+        setIsFavorited(true);
+        showToast('Added to favorites', 'success');
+      }
+    }
+    setFavLoading(false);
+  };
+
   if (loading) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -310,14 +351,31 @@ export default function GamePage() {
             <span>Added {formatDate(game.created_at)}</span>
           </div>
         </div>
-        <button
-          onClick={() => setShowReport(true)}
-          className="flex items-center gap-1 rounded-btn px-3 py-2 text-sm text-surface-light/60 transition-colors hover:bg-red-500/10 hover:text-red-400"
-          title="Report this game"
-        >
-          <Flag className="h-4 w-4" />
-          <span className="hidden sm:inline">Report</span>
-        </button>
+        <div className="flex items-center gap-2">
+          {user && (
+            <button
+              onClick={toggleFavorite}
+              disabled={favLoading}
+              className={`flex items-center gap-1 rounded-btn px-3 py-2 text-sm transition-all ${
+                isFavorited
+                  ? 'bg-pink-500/15 text-pink-400 hover:bg-pink-500/25'
+                  : 'text-surface-light/60 hover:bg-pink-500/10 hover:text-pink-400'
+              } ${favLoading ? 'opacity-50' : ''}`}
+              title={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              <Heart className={`h-4 w-4 transition-all ${isFavorited ? 'fill-pink-400 scale-110' : ''}`} />
+              <span className="hidden sm:inline">{isFavorited ? 'Favorited' : 'Favorite'}</span>
+            </button>
+          )}
+          <button
+            onClick={() => setShowReport(true)}
+            className="flex items-center gap-1 rounded-btn px-3 py-2 text-sm text-surface-light/60 transition-colors hover:bg-red-500/10 hover:text-red-400"
+            title="Report this game"
+          >
+            <Flag className="h-4 w-4" />
+            <span className="hidden sm:inline">Report</span>
+          </button>
+        </div>
       </div>
 
       {/* Game Player */}

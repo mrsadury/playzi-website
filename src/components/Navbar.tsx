@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, User, LogOut, LayoutDashboard, Gamepad2 } from 'lucide-react';
+import { Menu, X, Search, User, LogOut, LayoutDashboard, Gamepad2, Heart } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useSettings } from '@/context/SettingsContext';
 
@@ -120,6 +120,9 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
                   <div className="absolute right-0 top-full z-50 mt-2 w-52 overflow-hidden rounded-btn border border-dark-border bg-dark-card shadow-xl animate-scale-in">
                     <Link to="/profile" className="flex items-center gap-2 px-4 py-3 text-sm text-surface-light hover:bg-dark-hover">
                       <User className="h-4 w-4" /> Profile
+                    </Link>
+                    <Link to="/favorites" className="flex items-center gap-2 px-4 py-3 text-sm text-surface-light hover:bg-dark-hover">
+                      <Heart className="h-4 w-4" /> Favorites
                     </Link>
                     {isAdmin && (
                       <Link to="/admin" className="flex items-center gap-2 px-4 py-3 text-sm text-surface-light hover:bg-dark-hover">

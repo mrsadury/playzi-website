@@ -19,6 +19,7 @@ import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
 import ProfilePage from '@/pages/ProfilePage';
 import ProfileEditPage from '@/pages/ProfileEditPage';
+import FavoritesPage from '@/pages/FavoritesPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import MaintenancePage from '@/pages/MaintenancePage';
 
@@ -56,6 +57,7 @@ export default function App() {
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/profile/edit" element={<ProfileEditPage />} />
+                <Route path="/favorites" element={<FavoritesPage />} />
                 <Route path="/maintenance" element={<MaintenancePage />} />
                 <Route path="/p/:slug" element={<CustomPageView />} />
                 <Route path="/news/:slug" element={<NewsDetailPage />} />
