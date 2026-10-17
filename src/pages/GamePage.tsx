@@ -419,7 +419,7 @@ export default function GamePage() {
               style={iframeStyle}
               allow="autoplay; fullscreen; gamepad; geolocation; microphone; camera; accelerometer; gyroscope; orientation-lock"
               allowFullScreen
-              sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-pointer-lock allow-orientation-lock allow-modals"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-orientation-lock allow-modals"
               onLoad={() => setIframeLoading(false)}
               onError={() => {
                 setIframeLoading(false);
