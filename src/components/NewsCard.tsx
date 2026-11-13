@@ -12,7 +12,7 @@ export default function NewsCard({ article, featured = false }: NewsCardProps) {
   return (
     <Link
       to={`/news/${article.slug}`}
-      className={`group block overflow-hidden rounded-card border border-dark-border bg-dark-card transition-all hover:border-aqua hover:shadow-lg hover:shadow-aqua/10 ${
+      className={`group block overflow-hidden rounded-card border border-dark-border bg-dark-card shadow-card transition-all duration-300 ease-smooth hover:-translate-y-0.5 hover:border-aqua/40 hover:shadow-card-hover ${
         featured ? 'sm:flex' : ''
       }`}
     >
@@ -22,7 +22,7 @@ export default function NewsCard({ article, featured = false }: NewsCardProps) {
             src={article.image_url}
             alt={article.title}
             loading="lazy"
-            className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+            className={`h-full w-full object-cover transition-transform duration-500 ease-smooth group-hover:scale-105 ${
               featured ? 'aspect-[16/9] sm:h-full' : ''
             }`}
             onError={(e) => {
@@ -30,14 +30,14 @@ export default function NewsCard({ article, featured = false }: NewsCardProps) {
             }}
           />
           {article.featured && (
-            <span className="absolute left-2 top-2 rounded-full bg-gold px-2 py-0.5 text-[10px] font-bold text-black">
+            <span className="absolute left-2 top-2 rounded-full bg-gradient-to-r from-gold to-gold-hover px-2 py-0.5 text-[10px] font-bold text-dark-bg shadow-sm">
               FEATURED
             </span>
           )}
         </div>
       )}
       <div className={`p-4 ${featured ? 'sm:flex sm:flex-col sm:justify-center sm:p-6' : ''}`}>
-        <h3 className={`font-bold text-surface-light ${featured ? 'text-xl sm:text-2xl' : 'text-base'} line-clamp-2`}>
+        <h3 className={`font-bold text-surface-light transition-colors duration-300 group-hover:text-aqua ${featured ? 'text-xl sm:text-2xl' : 'text-base'} line-clamp-2`}>
           {article.title}
         </h3>
         {article.excerpt && (

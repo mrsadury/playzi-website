@@ -23,7 +23,7 @@ export default function Footer({ footerText }: { footerText?: string | null }) {
   }, []);
 
   return (
-    <footer className="border-t border-dark-border bg-dark-surface">
+    <footer className="border-t border-dark-border bg-dark-surface/50 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-2">
@@ -31,23 +31,23 @@ export default function Footer({ footerText }: { footerText?: string | null }) {
               <img src={logoImageUrl} alt="PLAYZI" style={{ width: `${settings?.logo_width || 160}px`, height: `${settings?.logo_height || 40}px` }} className="object-contain" />
             ) : (
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-aqua">
-                  <Gamepad2 className="h-4 w-4 text-black" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-aqua to-aqua-strong shadow-glow-sm">
+                  <Gamepad2 className="h-4 w-4 text-dark-bg" />
                 </div>
                 <span className="text-lg font-extrabold text-surface-light">
-                  PLAY<span className="text-aqua">ZI</span>
+                  PLAY<span className="text-gradient">ZI</span>
                 </span>
               </div>
             )}
           </div>
           <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-surface-light/60">
-            <Link to="/games" className="hover:text-aqua">Games</Link>
-            <Link to="/categories" className="hover:text-aqua">Categories</Link>
-            <Link to="/popular" className="hover:text-aqua">Popular</Link>
-            <Link to="/new" className="hover:text-aqua">New Games</Link>
-            <Link to="/leaderboard" className="hover:text-aqua">Leaderboard</Link>
+            <Link to="/games" className="transition-colors duration-300 hover:text-aqua">Games</Link>
+            <Link to="/categories" className="transition-colors duration-300 hover:text-aqua">Categories</Link>
+            <Link to="/popular" className="transition-colors duration-300 hover:text-aqua">Popular</Link>
+            <Link to="/new" className="transition-colors duration-300 hover:text-aqua">New Games</Link>
+            <Link to="/leaderboard" className="transition-colors duration-300 hover:text-aqua">Leaderboard</Link>
             {customPages.map((page) => (
-              <Link key={page.id} to={`/p/${page.slug}`} className="hover:text-aqua">
+              <Link key={page.id} to={`/p/${page.slug}`} className="transition-colors duration-300 hover:text-aqua">
                 {page.title}
               </Link>
             ))}

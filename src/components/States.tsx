@@ -12,8 +12,8 @@ export function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-card border border-dashed border-dark-border bg-dark-card px-6 py-16 text-center">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-dark-hover text-aqua">
+    <div className="flex flex-col items-center justify-center rounded-card border border-dashed border-dark-border bg-dark-card/50 px-6 py-16 text-center">
+      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-dark-hover text-aqua shadow-glow-sm">
         {icon || <Gamepad2 className="h-8 w-8" />}
       </div>
       <h3 className="text-lg font-semibold text-surface-light">{title}</h3>
@@ -33,8 +33,8 @@ export function ErrorState({
   onRetry?: () => void;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-card border border-red-500/20 bg-red-500/5 px-6 py-16 text-center">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-red-400">
+    <div className="flex flex-col items-center justify-center rounded-card border border-error/20 bg-error/5 px-6 py-16 text-center">
+      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-error/10 text-error">
         <Compass className="h-8 w-8" />
       </div>
       <h3 className="text-lg font-semibold text-surface-light">{title}</h3>

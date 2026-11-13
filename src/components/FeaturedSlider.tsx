@@ -28,7 +28,6 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
   const goNext = useCallback(() => goTo(currentIndex + 1), [currentIndex, goTo]);
   const goPrev = useCallback(() => goTo(currentIndex - 1), [currentIndex, goTo]);
 
-  // Auto-advance every 6 seconds
   useEffect(() => {
     if (total <= 1) return;
     autoPlayRef.current = setInterval(() => {
@@ -39,7 +38,6 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
     };
   }, [currentIndex, total, goTo]);
 
-  // GIF auto-play: show GIF 2.5s after a card becomes active
   useEffect(() => {
     if (gifTimerRef.current) {
       clearTimeout(gifTimerRef.current);
@@ -51,7 +49,7 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
     if (activeGame?.gif_url) {
       gifTimerRef.current = setTimeout(() => {
         setShowGifFor(activeGame.id);
-      }, 2500);
+      }, 1500);
     }
 
     return () => {
@@ -72,7 +70,6 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
     }, 6000);
   };
 
-  // Touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX);
     setTouchEnd(null);
@@ -106,7 +103,7 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
 
   return (
     <div
-      className="relative overflow-hidden rounded-card bg-dark-surface"
+      className="relative overflow-hidden rounded-2xl border border-dark-border bg-dark-surface shadow-elevated"
       onMouseEnter={pauseAutoPlay}
       onMouseLeave={resumeAutoPlay}
       onTouchStart={handleTouchStart}
@@ -116,7 +113,7 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
       {/* Slider track */}
       <div
         ref={trackRef}
-        className="flex transition-transform duration-500 ease-out"
+        className="flex transition-transform duration-700 ease-smooth"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {games.map((game) => {
@@ -129,7 +126,7 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
                   src={game.thumbnail || getImageFallback(game.title)}
                   alt={game.title}
                   loading="lazy"
-                  className={`h-full w-full object-cover transition-opacity duration-500 ${
+                  className={`h-full w-full object-cover transition-opacity duration-700 ${
                     showGif ? 'opacity-0' : 'opacity-100'
                   }`}
                   onError={(e) => {
@@ -140,26 +137,29 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
                   <img
                     src={game.gif_url!}
                     alt=""
-                    className="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-500"
+                    className="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-700"
                     onError={() => setShowGifFor(null)}
                   />
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-dark-bg/60 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
-                  <span className="badge bg-aqua/90 text-black mb-3">{game.category_name}</span>
-                  <h2 className="text-2xl font-bold text-surface-light sm:text-4xl">{game.title}</h2>
+                  <span className="badge mb-3 bg-gradient-to-r from-aqua to-aqua-strong text-dark-bg shadow-glow-sm">
+                    {game.category_name}
+                  </span>
+                  <h2 className="text-2xl font-extrabold text-surface-light drop-shadow-lg sm:text-4xl">{game.title}</h2>
                   {game.description && (
                     <p className="mt-2 max-w-2xl text-sm text-surface-light/70 line-clamp-2 sm:text-base">
                       {game.description}
                     </p>
                   )}
                   <div className="mt-4 flex items-center gap-4">
-                    <Link to={`/game/${game.slug}`} className="btn-primary">
-                      <Play className="h-4 w-4 fill-black" />
+                    <Link to={`/game/${game.slug}`} className="btn-primary group">
+                      <Play className="h-4 w-4 fill-dark-bg transition-transform duration-300 group-hover:scale-110" />
                       Play Now
                     </Link>
                     <span className="flex items-center gap-1.5 text-sm text-surface-light/60">
-                      <Eye className="h-4 w-4" />
+                      <Eye className="h-4 w-4 text-aqua" />
                       {formatNumber(game.views)} views
                     </span>
                   </div>
@@ -173,14 +173,14 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
       {/* Navigation arrows - desktop */}
       <button
         onClick={(e) => { e.preventDefault(); goPrev(); }}
-        className="absolute left-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-surface-light backdrop-blur-sm transition-all hover:bg-aqua hover:text-black md:flex"
+        className="absolute left-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-dark-bg/60 text-surface-light backdrop-blur-md transition-all duration-300 ease-smooth hover:border-aqua/50 hover:bg-aqua hover:text-dark-bg hover:shadow-glow active:scale-90 md:flex"
         title="Previous"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
       <button
         onClick={(e) => { e.preventDefault(); goNext(); }}
-        className="absolute right-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/60 text-surface-light backdrop-blur-sm transition-all hover:bg-aqua hover:text-black md:flex"
+        className="absolute right-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-dark-bg/60 text-surface-light backdrop-blur-md transition-all duration-300 ease-smooth hover:border-aqua/50 hover:bg-aqua hover:text-dark-bg hover:shadow-glow active:scale-90 md:flex"
         title="Next"
       >
         <ChevronRight className="h-5 w-5" />
@@ -192,10 +192,10 @@ export default function FeaturedSlider({ games }: FeaturedSliderProps) {
           <button
             key={game.id}
             onClick={(e) => { e.preventDefault(); goTo(i); }}
-            className={`h-2 rounded-full transition-all ${
+            className={`h-2 rounded-full transition-all duration-300 ease-smooth ${
               i === currentIndex
-                ? 'w-6 bg-aqua'
-                : 'w-2 bg-white/40 hover:bg-white/60'
+                ? 'w-6 bg-gradient-to-r from-aqua to-aqua-strong shadow-glow-sm'
+                : 'w-2 bg-white/30 hover:bg-white/50'
             }`}
             title={`Slide ${i + 1}`}
           />
@@ -209,14 +209,14 @@ function SingleFeaturedCard({ game, showGif }: { game: Game; showGif: boolean })
   return (
     <Link
       to={`/game/${game.slug}`}
-      className="group relative block overflow-hidden rounded-card bg-dark-surface"
+      className="group relative block overflow-hidden rounded-2xl border border-dark-border bg-dark-surface shadow-elevated"
     >
       <div className="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[21/9]">
         <img
           src={game.thumbnail || getImageFallback(game.title)}
           alt={game.title}
           loading="lazy"
-          className={`h-full w-full object-cover transition-opacity duration-500 ${showGif ? 'opacity-0' : 'opacity-100'}`}
+          className={`h-full w-full object-cover transition-all duration-700 ease-smooth group-hover:scale-[1.03] ${showGif ? 'opacity-0' : 'opacity-100'}`}
           onError={(e) => {
             (e.target as HTMLImageElement).src = getImageFallback(game.title);
           }}
@@ -225,13 +225,16 @@ function SingleFeaturedCard({ game, showGif }: { game: Game; showGif: boolean })
           <img
             src={game.gif_url}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-500"
+            className="absolute inset-0 h-full w-full object-cover opacity-100 transition-opacity duration-700"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-dark-bg/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-dark-bg/60 via-transparent to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8">
-          <span className="badge bg-aqua/90 text-black mb-3">{game.category_name}</span>
-          <h2 className="text-2xl font-bold text-surface-light sm:text-4xl">{game.title}</h2>
+          <span className="badge mb-3 bg-gradient-to-r from-aqua to-aqua-strong text-dark-bg shadow-glow-sm">
+            {game.category_name}
+          </span>
+          <h2 className="text-2xl font-extrabold text-surface-light drop-shadow-lg sm:text-4xl">{game.title}</h2>
           {game.description && (
             <p className="mt-2 max-w-2xl text-sm text-surface-light/70 line-clamp-2 sm:text-base">
               {game.description}
@@ -239,11 +242,11 @@ function SingleFeaturedCard({ game, showGif }: { game: Game; showGif: boolean })
           )}
           <div className="mt-4 flex items-center gap-4">
             <span className="btn-primary">
-              <Play className="h-4 w-4 fill-black" />
+              <Play className="h-4 w-4 fill-dark-bg" />
               Play Now
             </span>
             <span className="flex items-center gap-1.5 text-sm text-surface-light/60">
-              <Eye className="h-4 w-4" />
+              <Eye className="h-4 w-4 text-aqua" />
               {formatNumber(game.views)} views
             </span>
           </div>

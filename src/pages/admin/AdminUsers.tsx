@@ -121,7 +121,7 @@ export default function AdminUsers() {
                 const isSelf = u.id === currentUser?.id;
                 const isAdminUser = u.id === '01514308-0d77-4cce-93e6-ebaa11e24425';
                 return (
-                  <tr key={u.id} className="hover:bg-dark-hover/30 hover:bg-black/40">
+                  <tr key={u.id} className="hover:bg-dark-hover/30 hover:bg-dark-bg/40">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         {u.avatar_url ? (

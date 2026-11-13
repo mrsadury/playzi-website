@@ -158,7 +158,7 @@ export default function AdminReports() {
               reports.map((report) => {
                 const statusCfg = STATUS_CONFIG[report.status] || STATUS_CONFIG.pending;
                 return (
-                  <tr key={report.id} className="hover:bg-dark-hover/30 hover:bg-black/40">
+                  <tr key={report.id} className="hover:bg-dark-hover/30 hover:bg-dark-bg/40">
                     <td className="px-4 py-3">
                       <p className="font-medium text-surface-light text-surface-light">{report.games?.title || 'Unknown game'}</p>
                       <p className="text-xs text-surface-light/50 text-surface-light/50 sm:hidden">{REASON_LABELS[report.reason] || report.reason}</p>
@@ -194,7 +194,7 @@ export default function AdminReports() {
       <Modal open={!!selectedReport} onClose={() => setSelectedReport(null)} title="Manage Report" size="md">
         {selectedReport && (
           <div className="space-y-4">
-            <div className="rounded-btn bg-dark-hover/50 p-4 bg-black/40">
+            <div className="rounded-btn bg-dark-hover/50 p-4 bg-dark-bg/40">
               <p className="text-sm font-medium text-surface-light text-surface-light">{selectedReport.games?.title || 'Unknown game'}</p>
               <p className="mt-1 text-xs text-surface-light/50 text-surface-light/60">
                 Reason: {REASON_LABELS[selectedReport.reason] || selectedReport.reason}

@@ -163,7 +163,7 @@ export default function AdminAnalytics() {
                     <span className="font-medium text-surface-light text-surface-light">{cat.category_name}</span>
                     <span className="text-surface-light/50 text-surface-light/60">{formatNumber(cat.total_views)} views / {cat.game_count} games</span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-dark-hover bg-black">
+                  <div className="h-2 overflow-hidden rounded-full bg-dark-hover bg-dark-bg">
                     <div
                       className="h-full rounded-full bg-aqua transition-all"
                       style={{ width: `${(cat.total_views / maxCategoryViews) * 100}%` }}
@@ -196,7 +196,7 @@ export default function AdminAnalytics() {
               <tr><td colSpan={5} className="px-6 py-8 text-center text-surface-light/50 text-surface-light/50">No games found</td></tr>
             ) : (
               topGames.map((game, i) => (
-                <tr key={game.id} className="hover:bg-dark-hover/30 hover:bg-black/40">
+                <tr key={game.id} className="hover:bg-dark-hover/30 hover:bg-dark-bg/40">
                   <td className="px-6 py-3 font-bold text-aqua">{i + 1}</td>
                   <td className="px-6 py-3">
                     <div className="flex items-center gap-3">

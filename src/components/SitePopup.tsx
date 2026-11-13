@@ -58,8 +58,8 @@ export default function SitePopup() {
 
   return (
     <div className="fixed inset-0 z-[95] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-dark-bg/70 backdrop-blur-sm animate-fade-in" onClick={settings.popup_dismissible ? handleClose : undefined} />
-      <div className="relative w-full max-w-md animate-scale-in overflow-hidden rounded-card bg-dark-card shadow-2xl">
+      <div className="absolute inset-0 bg-dark-bg/80 backdrop-blur-md animate-fade-in" onClick={settings.popup_dismissible ? handleClose : undefined} />
+      <div className="relative w-full max-w-md animate-scale-in overflow-hidden rounded-2xl border border-dark-border bg-dark-elevated/95 shadow-elevated backdrop-blur-xl">
         {settings.popup_image_url && (
           <div className="aspect-[16/9] w-full overflow-hidden bg-dark-surface">
             <img
@@ -75,7 +75,7 @@ export default function SitePopup() {
             <h2 className="text-xl font-bold text-surface-light">{settings.popup_title}</h2>
           )}
           {settings.popup_message && (
-            <p className="mt-2 text-sm leading-relaxed text-surface-light/50">{settings.popup_message}</p>
+            <p className="mt-2 text-sm leading-relaxed text-surface-light/60">{settings.popup_message}</p>
           )}
           {settings.popup_button_text && (
             settings.popup_button_url ? (
@@ -106,7 +106,7 @@ export default function SitePopup() {
         {settings.popup_dismissible && (
           <button
             onClick={handleClose}
-            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-dark-bg/50 text-surface-light backdrop-blur-sm transition-colors hover:bg-dark-bg/80"
+            className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-dark-bg/50 text-surface-light backdrop-blur-sm transition-all duration-300 hover:bg-dark-bg/80 active:scale-90"
           >
             <X className="h-4 w-4" />
           </button>

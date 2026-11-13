@@ -386,7 +386,7 @@ export default function AdminGames() {
           ) : (
             <>
               <p className="text-sm text-surface-light text-surface-light">
-                Type <code className="rounded bg-dark-hover px-1.5 py-0.5 font-mono text-red-400 bg-black">DELETE ALL</code> to confirm:
+                Type <code className="rounded bg-dark-hover px-1.5 py-0.5 font-mono text-red-400 bg-dark-bg">DELETE ALL</code> to confirm:
               </p>
               <input
                 type="text"

@@ -190,12 +190,13 @@ export default function HomePage() {
       )}
 
       {/* CTA */}
-      <section className="mb-4 overflow-hidden rounded-card border border-dark-border bg-dark-surface p-8 text-center sm:p-12">
-        <h2 className="text-2xl font-bold text-surface-light sm:text-3xl">Ready to play?</h2>
-        <p className="mx-auto mt-2 max-w-lg text-sm text-surface-light/60">
+      <section className="mb-4 overflow-hidden rounded-2xl border border-dark-border bg-gradient-to-br from-dark-surface via-dark-card to-dark-surface p-8 text-center shadow-elevated sm:p-12">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-aqua/5 via-transparent to-accent/5" />
+        <h2 className="relative text-2xl font-extrabold text-surface-light sm:text-3xl">Ready to play?</h2>
+        <p className="relative mx-auto mt-2 max-w-lg text-sm text-surface-light/60">
           Explore hundreds of browser games across every category. No downloads required.
         </p>
-        <Link to="/games" className="btn-primary mt-6">
+        <Link to="/games" className="btn-primary relative mt-6">
           Browse All Games
           <ChevronRight className="h-4 w-4" />
         </Link>

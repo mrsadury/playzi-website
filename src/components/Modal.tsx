@@ -20,12 +20,12 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
 
   return (
     <div className="fixed inset-0 z-[90] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-dark-bg/60 backdrop-blur-sm animate-fade-in" onClick={onClose} />
+      <div className="absolute inset-0 bg-dark-bg/70 backdrop-blur-md animate-fade-in" onClick={onClose} />
       <div className={`relative w-full ${sizeClass} animate-scale-in`}>
-        <div className="card max-h-[90vh] overflow-hidden">
+        <div className="card max-h-[90vh] overflow-hidden bg-dark-elevated/95 backdrop-blur-xl">
           <div className="flex items-center justify-between border-b border-dark-border px-5 py-4">
             <h3 className="text-lg font-semibold text-surface-light">{title}</h3>
-            <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-btn text-surface-light/50 hover:bg-dark-hover">
+            <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-btn text-surface-light/50 transition-all duration-300 hover:bg-dark-hover hover:text-surface-light active:scale-90">
               <X className="h-4 w-4" />
             </button>
           </div>

@@ -22,7 +22,7 @@ export function GameGridSkeleton({ count = 8 }: { count?: number }) {
 
 export function HeroSkeleton() {
   return (
-    <div className="overflow-hidden rounded-card">
+    <div className="overflow-hidden rounded-2xl border border-dark-border">
       <div className="shimmer aspect-[16/9] w-full sm:aspect-[21/9]" />
     </div>
   );

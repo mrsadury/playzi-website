@@ -28,14 +28,14 @@ export default function PublicLayout() {
 
   if (!maintenanceChecked && settings?.maintenance_enabled) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-black">
-        <div className="h-10 w-10 animate-spin rounded-full border-3 border-aqua border-t-transparent" />
+      <div className="flex min-h-screen items-center justify-center bg-dark-bg">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-aqua border-t-transparent shadow-glow-sm" />
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-black">
+    <div className="flex min-h-screen flex-col bg-dark-bg">
       <Navbar onMenuClick={openSidebar} />
       <CategorySidebar open={sidebarOpen} onClose={closeSidebar} />
       <main className="flex-1">

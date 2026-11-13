@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,8 +14,12 @@
   }
 
   body {
-    @apply bg-black text-surface-light font-sans antialiased;
+    @apply bg-dark-bg text-surface-light font-sans antialiased;
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34, 211, 238, 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139, 92, 246, 0.05), transparent);
+    background-attachment: fixed;
   }
 
   ::selection {
@@ -25,27 +29,31 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-aqua px-5 py-2.5 text-sm font-semibold text-black transition-all hover:bg-aqua-hover hover:shadow-lg hover:shadow-aqua/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-gradient-to-r from-aqua to-aqua-strong px-5 py-2.5 text-sm font-semibold text-dark-bg shadow-glow-sm transition-all duration-300 ease-smooth hover:shadow-glow hover:brightness-110 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-btn border border-dark-border bg-dark-card px-5 py-2.5 text-sm font-semibold text-surface-light transition-all hover:bg-dark-hover hover:border-aqua/40 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-btn border border-dark-border bg-dark-card px-5 py-2.5 text-sm font-semibold text-surface-light shadow-card transition-all duration-300 ease-smooth hover:bg-dark-hover hover:border-aqua/40 hover:shadow-glow-sm active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-btn px-4 py-2.5 text-sm font-medium text-surface-light/60 transition-all hover:bg-dark-hover hover:text-surface-light active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-btn px-4 py-2.5 text-sm font-medium text-surface-light/60 transition-all duration-300 ease-smooth hover:bg-dark-hover hover:text-surface-light active:scale-[0.97];
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-red-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-red-600 active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-btn bg-gradient-to-r from-error to-error-hover px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 ease-smooth hover:shadow-md hover:brightness-110 active:scale-[0.97];
   }
 
   .input-field {
-    @apply w-full rounded-btn border border-dark-border bg-dark-card px-4 py-2.5 text-sm text-surface-light placeholder:text-surface-light/40 transition-all focus:border-aqua focus:outline-none focus:ring-2 focus:ring-aqua/20;
+    @apply w-full rounded-btn border border-dark-border bg-dark-card px-4 py-2.5 text-sm text-surface-light placeholder:text-surface-light/40 transition-all duration-300 ease-smooth focus:border-aqua focus:outline-none focus:ring-2 focus:ring-aqua/20 focus:shadow-glow-sm;
   }
 
   .card {
-    @apply rounded-card border border-dark-border bg-dark-card transition-all;
+    @apply rounded-card border border-dark-border bg-dark-card shadow-card transition-all duration-300 ease-smooth;
+  }
+
+  .glass-card {
+    @apply rounded-card border border-white/5 bg-white/[0.03] backdrop-blur-xl transition-all duration-300 ease-smooth;
   }
 
   .badge {
@@ -62,7 +70,11 @@
   }
 
   .admin-card {
-    @apply rounded-card border border-dark-border bg-dark-card transition-all;
+    @apply rounded-card border border-dark-border bg-dark-card shadow-card transition-all duration-300 ease-smooth;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-aqua to-aqua-strong bg-clip-text text-transparent;
   }
 }
 
@@ -73,29 +85,30 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: #070B14;
 }
 
 ::-webkit-scrollbar-thumb {
   @apply rounded-full;
-  background: #1f1f1f;
+  background: #1E293B;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-aqua/50;
+  background: #0891B2;
 }
 
 /* Skeleton shimmer */
 .shimmer {
   @apply relative overflow-hidden;
-  background: #141414;
+  background: #111927;
 }
 
 .shimmer::after {
   content: '';
   @apply absolute inset-0;
-  background: linear-gradient(90deg, transparent, rgba(120, 246, 225, 0.10), transparent);
-  animation: shimmerMove 1.5s infinite;
+  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.08), transparent);
+  animation: shimmerMove 1.8s ease-in-out infinite;
 }
 
 @keyframes shimmerMove {

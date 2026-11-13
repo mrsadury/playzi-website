@@ -66,14 +66,12 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
     }
   }, [open]);
 
-  // Listen for recently played updates
   useEffect(() => {
     const handler = () => setRecentGames(getRecentlyPlayed());
     window.addEventListener('playzi:recentGamesUpdated', handler);
     return () => window.removeEventListener('playzi:recentGamesUpdated', handler);
   }, []);
 
-  // Close sidebar on route change - but only when path actually changes
   const prevPath = useRef(location.pathname);
   useEffect(() => {
     if (prevPath.current !== location.pathname) {
@@ -99,7 +97,7 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
     { to: '/popular', label: 'Popular', icon: Flame },
     { to: '/new', label: 'New Games', icon: Sparkles },
     { to: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-  { to: '/favorites', label: 'Favorites', icon: Heart },
+    { to: '/favorites', label: 'Favorites', icon: Heart },
   ];
 
   const isQuickLinkActive = (to: string) => {
@@ -111,7 +109,7 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
     <>
       {/* Overlay */}
       <div
-        className={`fixed inset-0 z-50 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 bg-dark-bg/80 backdrop-blur-sm transition-opacity duration-400 ease-smooth ${
           open ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={onClose}
@@ -119,18 +117,23 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-dark-border bg-dark-surface transition-transform duration-300 ease-out ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-white/10 bg-dark-surface/60 backdrop-blur-2xl transition-transform duration-400 ease-smooth shadow-2xl ${
           open ? 'translate-x-0' : '-translate-x-full'
         }`}
+        style={{
+          background: 'linear-gradient(135deg, rgba(15,23,42,0.55) 0%, rgba(15,23,42,0.45) 100%)',
+          backdropFilter: 'blur(24px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+        }}
       >
         {/* Header */}
         <div className="flex h-16 items-center justify-between border-b border-dark-border px-5">
           <span className="text-lg font-extrabold text-surface-light">
-            PLAY<span className="text-aqua">ZI</span>
+            PLAY<span className="text-gradient">ZI</span>
           </span>
           <button
             onClick={onClose}
-            className="flex h-9 w-9 items-center justify-center rounded-btn text-surface-light/60 transition-colors hover:bg-dark-hover hover:text-surface-light"
+            className="flex h-9 w-9 items-center justify-center rounded-btn text-surface-light/60 transition-all duration-300 ease-smooth hover:bg-dark-hover hover:text-surface-light active:scale-90"
           >
             <X className="h-5 w-5" />
           </button>
@@ -139,14 +142,14 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
         {/* Search */}
         <div className="border-b border-dark-border p-4">
           <form onSubmit={handleSearch}>
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-surface-light/40" />
+            <div className="group relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-surface-light/40 transition-colors duration-300 group-focus-within:text-aqua" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search games..."
-                className="w-full rounded-btn border border-dark-border bg-dark-card py-2.5 pl-9 pr-4 text-sm text-surface-light placeholder:text-surface-light/40 focus:border-aqua focus:outline-none focus:ring-1 focus:ring-aqua/30"
+                className="w-full rounded-btn border border-dark-border bg-dark-card py-2.5 pl-9 pr-4 text-sm text-surface-light placeholder:text-surface-light/40 transition-all duration-300 ease-smooth focus:border-aqua focus:outline-none focus:ring-1 focus:ring-aqua/30 focus:shadow-glow-sm"
               />
             </div>
           </form>
@@ -165,15 +168,15 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
                   <Link
                     key={link.to}
                     to={link.to}
-                    className={`group flex items-center gap-3 rounded-btn px-3 py-2.5 text-sm font-medium transition-all ${
+                    className={`group flex items-center gap-3 rounded-btn px-3 py-2.5 text-sm font-medium transition-all duration-300 ease-smooth ${
                       active
-                        ? 'bg-aqua/15 text-aqua'
+                        ? 'bg-aqua/15 text-aqua shadow-glow-sm'
                         : 'text-surface-light/70 hover:bg-dark-hover hover:text-surface-light'
                     }`}
                   >
-                    <Icon className={`h-4 w-4 transition-transform duration-200 ${active ? 'scale-110' : 'group-hover:scale-110'}`} />
+                    <Icon className={`h-4 w-4 transition-transform duration-300 ease-smooth ${active ? 'scale-110' : 'group-hover:scale-110'}`} />
                     {link.label}
-                    {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-aqua" />}
+                    {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-aqua shadow-glow-sm" />}
                   </Link>
                 );
               })}
@@ -192,7 +195,7 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
                   <Link
                     key={game.id}
                     to={`/game/${game.slug}`}
-                    className="group flex items-center gap-3 rounded-btn px-3 py-2 text-sm font-medium text-surface-light/70 transition-all hover:bg-dark-hover hover:text-surface-light"
+                    className="group flex items-center gap-3 rounded-btn px-3 py-2 text-sm font-medium text-surface-light/70 transition-all duration-300 ease-smooth hover:bg-dark-hover hover:text-surface-light"
                   >
                     {game.thumbnail ? (
                       <img
@@ -226,15 +229,15 @@ export default function CategorySidebar({ open, onClose }: CategorySidebarProps)
                     <Link
                       key={cat.id}
                       to={`/category/${cat.slug}`}
-                      className={`group flex items-center gap-3 rounded-btn px-3 py-2.5 text-sm font-medium transition-all ${
+                      className={`group flex items-center gap-3 rounded-btn px-3 py-2.5 text-sm font-medium transition-all duration-300 ease-smooth ${
                         active
-                          ? 'bg-aqua/15 text-aqua'
+                          ? 'bg-aqua/15 text-aqua shadow-glow-sm'
                           : 'text-surface-light/70 hover:bg-dark-hover hover:text-surface-light'
                       }`}
                     >
-                      <Icon className={`h-4 w-4 transition-transform duration-200 ${active ? 'scale-110' : 'group-hover:scale-110'}`} />
+                      <Icon className={`h-4 w-4 transition-transform duration-300 ease-smooth ${active ? 'scale-110' : 'group-hover:scale-110'}`} />
                       {cat.name}
-                      {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-aqua" />}
+                      {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-aqua shadow-glow-sm" />}
                     </Link>
                   );
                 })}

@@ -11,14 +11,14 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({ title, linkTo, linkLabel = 'View all', children }: SectionHeaderProps) {
   return (
-    <div className="mb-4 flex items-end justify-between gap-4">
+    <div className="mb-5 flex items-end justify-between gap-4">
       <h2 className="text-xl font-bold text-surface-light sm:text-2xl">{title}</h2>
       <div className="flex items-center gap-3">
         {children}
         {linkTo && (
           <Link
             to={linkTo}
-            className="flex items-center gap-1 text-sm font-medium text-aqua transition-colors hover:text-aqua-hover"
+            className="flex items-center gap-1 text-sm font-medium text-aqua transition-all duration-300 ease-smooth hover:text-aqua-hover hover:gap-2"
           >
             {linkLabel}
             <ChevronRight className="h-4 w-4" />

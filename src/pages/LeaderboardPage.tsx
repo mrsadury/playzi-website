@@ -127,7 +127,7 @@ export default function LeaderboardPage() {
                   {r.avatar_url ? (
                     <img src={r.avatar_url} alt="" className={`rounded-full object-cover ${isFirst ? 'h-16 w-16' : 'h-12 w-12'}`} />
                   ) : (
-                    <div className={`flex items-center justify-center rounded-full bg-aqua text-black font-bold ${isFirst ? 'h-16 w-16 text-xl' : 'h-12 w-12 text-base'}`}>
+                    <div className={`flex items-center justify-center rounded-full bg-aqua text-dark-bg font-bold ${isFirst ? 'h-16 w-16 text-xl' : 'h-12 w-12 text-base'}`}>
                       {r.username.charAt(0).toUpperCase()}
                     </div>
                   )}

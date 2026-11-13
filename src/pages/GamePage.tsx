@@ -382,7 +382,7 @@ export default function GamePage() {
       <div
         ref={containerRef}
         id="game-player-container"
-        className={`relative mb-6 overflow-hidden border border-dark-border bg-black ${
+        className={`relative mb-6 overflow-hidden border border-dark-border bg-dark-bg ${
           isFullscreen ? 'rounded-none' : 'rounded-card'
         }`}
         style={containerStyle}
@@ -432,7 +432,7 @@ export default function GamePage() {
           <div className={`absolute right-3 z-10 flex gap-2 ${isFullscreen ? 'top-3' : 'bottom-3'}`}>
             <button
               onClick={handleFullscreen}
-              className="flex h-10 w-10 items-center justify-center rounded-btn bg-black/80 text-surface-light backdrop-blur-sm transition-all hover:bg-aqua hover:text-black"
+              className="flex h-10 w-10 items-center justify-center rounded-btn bg-dark-bg/80 text-surface-light backdrop-blur-sm transition-all hover:bg-aqua hover:text-dark-bg"
               title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
             >
               {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
@@ -476,7 +476,7 @@ export default function GamePage() {
             <Link
               key={i}
               to={`/games?q=${encodeURIComponent(tag)}`}
-              className="badge bg-dark-surface text-surface-light/60 hover:bg-aqua hover:text-black"
+              className="badge bg-dark-surface text-surface-light/60 hover:bg-aqua hover:text-dark-bg"
             >
               {tag}
             </Link>

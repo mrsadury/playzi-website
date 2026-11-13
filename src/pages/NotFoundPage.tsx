@@ -3,7 +3,7 @@ import { Home, Gamepad2 } from 'lucide-react';
 
 export default function NotFoundPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-black px-4 text-center">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-dark-bg px-4 text-center">
       <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-dark-hover text-aqua">
         <Gamepad2 className="h-10 w-10" />
       </div>

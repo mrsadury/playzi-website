@@ -28,7 +28,7 @@ export default function Pagination({ currentPage, totalPages, basePath, searchPa
   return (
     <nav className="mt-8 flex items-center justify-center gap-1">
       {currentPage > 1 && (
-        <Link to={buildUrl(currentPage - 1)} className="flex h-9 w-9 items-center justify-center rounded-btn border border-dark-border bg-dark-card text-surface-light/50 hover:border-aqua hover:text-aqua">
+        <Link to={buildUrl(currentPage - 1)} className="flex h-9 w-9 items-center justify-center rounded-btn border border-dark-border bg-dark-card text-surface-light/50 transition-all duration-300 ease-smooth hover:border-aqua hover:text-aqua hover:shadow-glow-sm active:scale-95">
           <ChevronLeft className="h-4 w-4" />
         </Link>
       )}
@@ -39,10 +39,10 @@ export default function Pagination({ currentPage, totalPages, basePath, searchPa
           <Link
             key={p}
             to={buildUrl(p)}
-            className={`flex h-9 min-w-9 items-center justify-center rounded-btn px-3 text-sm font-medium transition-colors ${
+            className={`flex h-9 min-w-9 items-center justify-center rounded-btn px-3 text-sm font-medium transition-all duration-300 ease-smooth ${
               p === currentPage
-                ? 'bg-aqua text-dark-bg'
-                : 'border border-dark-border bg-dark-card text-surface-light/50 hover:border-aqua hover:text-aqua'
+                ? 'bg-gradient-to-r from-aqua to-aqua-strong text-dark-bg shadow-glow-sm'
+                : 'border border-dark-border bg-dark-card text-surface-light/50 hover:border-aqua hover:text-aqua hover:shadow-glow-sm'
             }`}
           >
             {p}
@@ -50,7 +50,7 @@ export default function Pagination({ currentPage, totalPages, basePath, searchPa
         )
       )}
       {currentPage < totalPages && (
-        <Link to={buildUrl(currentPage + 1)} className="flex h-9 w-9 items-center justify-center rounded-btn border border-dark-border bg-dark-card text-surface-light/50 hover:border-aqua hover:text-aqua">
+        <Link to={buildUrl(currentPage + 1)} className="flex h-9 w-9 items-center justify-center rounded-btn border border-dark-border bg-dark-card text-surface-light/50 transition-all duration-300 ease-smooth hover:border-aqua hover:text-aqua hover:shadow-glow-sm active:scale-95">
           <ChevronRight className="h-4 w-4" />
         </Link>
       )}
