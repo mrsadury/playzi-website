@@ -20,6 +20,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   const [suggestionLoading, setSuggestionLoading] = useState(false);
   const suggestionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchWrapperRef = useRef<HTMLDivElement>(null);
+  const mobileSearchWrapperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { user, profile, isAdmin, signOut } = useAuth();
@@ -62,13 +63,16 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   }, [searchQuery]);
 
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (searchWrapperRef.current && !searchWrapperRef.current.contains(e.target as Node)) {
+    const handler = (e: PointerEvent) => {
+      const target = e.target as Node;
+      const insideDesktopSearch = searchWrapperRef.current?.contains(target);
+      const insideMobileSearch = mobileSearchWrapperRef.current?.contains(target);
+      if (!insideDesktopSearch && !insideMobileSearch) {
         setShowSuggestions(false);
       }
     };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
+    document.addEventListener('pointerdown', handler);
+    return () => document.removeEventListener('pointerdown', handler);
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -244,15 +248,56 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
       {/* Mobile search */}
       <div className="border-t border-dark-border px-4 py-2 sm:hidden">
         <form onSubmit={handleSearch}>
-          <div className="group relative">
+          <div ref={mobileSearchWrapperRef} className="group relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-surface-light/40 transition-colors duration-300 group-focus-within:text-aqua" />
             <input
-              type="text"
+              type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => searchQuery.trim() && setShowSuggestions(true)}
               placeholder="Search games..."
+              autoComplete="off"
+              enterKeyHint="search"
               className="w-full rounded-btn border border-dark-border bg-dark-card/80 py-2 pl-9 pr-4 text-sm text-surface-light placeholder:text-surface-light/40 transition-all duration-300 ease-smooth focus:border-aqua focus:outline-none focus:ring-2 focus:ring-aqua/20"
             />
+            {showSuggestions && searchQuery.trim() && (
+              <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-btn border border-dark-border bg-dark-card/95 shadow-elevated backdrop-blur-xl animate-scale-in">
+                {suggestionLoading ? (
+                  <div className="px-4 py-3 text-sm text-surface-light/50">Searching...</div>
+                ) : suggestions.length === 0 ? (
+                  <div className="px-4 py-3 text-sm text-surface-light/40">No games found for &quot;{searchQuery}&quot;</div>
+                ) : (
+                  suggestions.map((g) => (
+                    <button
+                      key={g.id}
+                      type="button"
+                      onClick={() => selectSuggestion(g.slug)}
+                      className="flex w-full items-center gap-3 px-3 py-2.5 text-left transition-colors duration-200 hover:bg-dark-hover"
+                    >
+                      <img
+                        src={g.thumbnail || getImageFallback(g.title)}
+                        alt=""
+                        className="h-9 w-12 shrink-0 rounded object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).src = getImageFallback(g.title); }}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-surface-light">{g.title}</p>
+                        <p className="truncate text-xs text-surface-light/50">{g.category_name}</p>
+                      </div>
+                      <Search className="h-3.5 w-3.5 shrink-0 text-surface-light/30" />
+                    </button>
+                  ))
+                )}
+                {suggestions.length > 0 && (
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center gap-1 border-t border-dark-border px-4 py-2.5 text-xs font-medium text-aqua transition-colors duration-200 hover:bg-aqua/10"
+                  >
+                    See all results for &quot;{searchQuery}&quot;
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </form>
       </div>

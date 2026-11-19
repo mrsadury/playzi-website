@@ -13,7 +13,7 @@ export default function FeaturedGameCard({ game }: FeaturedGameCardProps) {
       to={`/game/${game.slug}`}
       className="group relative block overflow-hidden rounded-2xl border border-dark-border bg-dark-surface shadow-elevated"
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden sm:aspect-[21/9]">
+      <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[21/9]">
         <img
           src={game.thumbnail || getImageFallback(game.title)}
           alt={game.title}
