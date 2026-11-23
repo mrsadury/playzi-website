@@ -14,6 +14,13 @@ export function formatNumber(n: number): string {
   return String(n);
 }
 
+export function formatCurrency(value: number | string): string {
+  return Number(value || 0).toLocaleString('en-BD', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 export function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
   return date.toLocaleDateString('en-US', {

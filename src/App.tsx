@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from '@/context/AuthContext';
 import { ToastProvider } from '@/context/ToastContext';
 import { SettingsProvider } from '@/context/SettingsContext';
+import { WalletProvider } from '@/context/WalletContext';
 import PublicLayout from '@/components/PublicLayout';
 import AdminRoute from '@/components/AdminRoute';
 import AdminLayout from '@/components/AdminLayout';
@@ -41,6 +42,7 @@ import NewsDetailPage from '@/pages/NewsDetailPage';
 export default function App() {
   return (
     <AuthProvider>
+      <WalletProvider>
       <SettingsProvider>
         <ToastProvider>
           <BrowserRouter>
@@ -84,6 +86,7 @@ export default function App() {
           </BrowserRouter>
         </ToastProvider>
       </SettingsProvider>
+      </WalletProvider>
     </AuthProvider>
   );
 }

@@ -177,3 +177,71 @@ export interface NewsArticle {
   created_at: string;
   updated_at: string;
 }
+
+export interface Wallet {
+  id: string;
+  user_id: string;
+  balance: number | string;
+  reserved_balance: number | string;
+  available_balance: number | string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface WalletSettings {
+  id: string;
+  merchant_number: string;
+  min_deposit: number | string;
+  max_deposit: number | string;
+  min_withdrawal: number | string;
+  max_withdrawal: number | string;
+}
+
+export interface WalletTransaction {
+  id: string;
+  user_id: string;
+  transaction_type: string;
+  direction: 'credit' | 'debit';
+  amount: number | string;
+  status: 'pending' | 'completed' | 'rejected';
+  description: string;
+  created_at: string;
+  completed_at: string | null;
+}
+
+export interface DepositRequest {
+  id: string;
+  user_id: string;
+  payment_method: 'bkash' | 'nagad';
+  amount: number | string;
+  sender_name: string;
+  transaction_id: string;
+  status: 'pending' | 'approved' | 'rejected';
+  rejection_reason: string | null;
+  restriction_until: string | null;
+  submitted_at: string;
+  reviewed_at: string | null;
+}
+
+export interface WithdrawalRequest {
+  id: string;
+  user_id: string;
+  payment_method: 'bkash' | 'nagad';
+  amount: number | string;
+  recipient_account: string;
+  account_holder_name: string;
+  status: 'pending' | 'approved' | 'rejected';
+  rejection_reason: string | null;
+  submitted_at: string;
+  reviewed_at: string | null;
+}
+
+export interface WalletNotification {
+  id: string;
+  user_id: string;
+  notification_type: string;
+  title: string;
+  message: string;
+  read_at: string | null;
+  created_at: string;
+}
