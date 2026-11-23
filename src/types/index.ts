@@ -33,6 +33,7 @@ export interface Category {
 export interface Profile {
   id: string;
   username: string;
+  full_name?: string | null;
   avatar_url: string | null;
   bio: string | null;
   is_suspended: boolean;
@@ -53,6 +54,7 @@ export interface GameView {
 export interface LeaderboardEntry {
   user_id: string;
   username: string;
+  full_name?: string | null;
   avatar_url: string | null;
   total_playtime_seconds: number;
   games_played: number;
@@ -142,6 +144,7 @@ export interface AnalyticsSummary {
 export interface AdminUser {
   id: string;
   username: string;
+  full_name?: string | null;
   avatar_url: string | null;
   bio: string | null;
   is_suspended: boolean;

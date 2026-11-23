@@ -11,6 +11,7 @@ export default function ProfileEditPage() {
   const { showToast } = useToast();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const [bio, setBio] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -25,6 +26,7 @@ export default function ProfileEditPage() {
   useEffect(() => {
     if (profile) {
       setUsername(profile.username || '');
+      setFullName(profile.full_name || '');
       setAvatarUrl(profile.avatar_url || '');
       setBio(profile.bio || '');
     }
@@ -54,6 +56,7 @@ export default function ProfileEditPage() {
       .from('profiles')
       .update({
         username: username.trim(),
+        full_name: fullName.trim() || null,
         avatar_url: avatarUrl.trim() || null,
         bio: bio.trim() || null,
       })
@@ -165,6 +168,10 @@ export default function ProfileEditPage() {
               placeholder="Your username"
               className="input-field"
             />
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-surface-light text-surface-light">Full name</label>
+            <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" className="input-field" />
           </div>
           <div>
             <label className="mb-1.5 block text-sm font-medium text-surface-light text-surface-light">Bio</label>

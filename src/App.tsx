@@ -36,6 +36,7 @@ import AdminReports from '@/pages/admin/AdminReports';
 import AdminUsers from '@/pages/admin/AdminUsers';
 import AdminPages from '@/pages/admin/AdminPages';
 import AdminNews from '@/pages/admin/AdminNews';
+import AdminWallet from '@/pages/admin/AdminWallet';
 import CustomPageView from '@/pages/CustomPageView';
 import NewsDetailPage from '@/pages/NewsDetailPage';
 
@@ -80,6 +81,7 @@ export default function App() {
               <Route path="/admin/users" element={<AdminRoute><AdminLayout><AdminUsers /></AdminLayout></AdminRoute>} />
               <Route path="/admin/pages" element={<AdminRoute><AdminLayout><AdminPages /></AdminLayout></AdminRoute>} />
               <Route path="/admin/news" element={<AdminRoute><AdminLayout><AdminNews /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/wallet" element={<AdminRoute><AdminLayout><AdminWallet /></AdminLayout></AdminRoute>} />
 
               <Route path="*" element={<NotFoundPage />} />
             </Routes>

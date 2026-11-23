@@ -4,6 +4,7 @@ import { User, Mail, Calendar, Edit3, Gamepad2, Eye, Trophy } from 'lucide-react
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { formatDate, formatNumber } from '@/lib/utils';
+import WalletSection from '@/components/WalletSection';
 
 interface UserStats {
   totalViews: number;
@@ -69,6 +70,7 @@ export default function ProfilePage() {
               </div>
               <div className="pb-2">
                 <h1 className="text-2xl font-bold text-surface-light">{profile?.username || 'User'}</h1>
+                <p className="text-sm text-surface-light/50">{profile?.full_name || 'Full name not set'}</p>
                 <p className="text-sm text-surface-light/50">{user.email}</p>
               </div>
             </div>
@@ -79,6 +81,8 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
+
+      <div className="mb-6"><WalletSection /></div>
 
       {/* Stats */}
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -127,6 +131,16 @@ export default function ProfilePage() {
             <User className="h-4 w-4 text-surface-light/50" />
             <span className="text-surface-light/50">Username:</span>
             <span className="font-medium text-surface-light">{profile?.username || 'Not set'}</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <User className="h-4 w-4 text-surface-light/50" />
+            <span className="text-surface-light/50">Full name:</span>
+            <span className="font-medium text-surface-light">{profile?.full_name || 'Not set'}</span>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <User className="h-4 w-4 text-surface-light/50" />
+            <span className="text-surface-light/50">User ID:</span>
+            <span className="truncate font-mono text-xs font-medium text-surface-light">{user.id}</span>
           </div>
           <div className="flex items-center gap-3 text-sm">
             <Mail className="h-4 w-4 text-surface-light/50" />
