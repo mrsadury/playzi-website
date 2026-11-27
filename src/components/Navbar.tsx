@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Search, User, LogOut, LayoutDashboard, Gamepad2, Heart, Wallet as WalletIcon } from 'lucide-react';
+import { Menu, Search, User, LogOut, LayoutDashboard, Gamepad2, Heart } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useSettings } from '@/context/SettingsContext';
 import { supabase } from '@/lib/supabase';
 import type { Game } from '@/types';
-import { formatCurrency, getImageFallback } from '@/lib/utils';
-import { useWallet } from '@/context/WalletContext';
+import { getImageFallback } from '@/lib/utils';
+import SiteNavigation from '@/components/SiteNavigation';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -26,7 +26,6 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
   const location = useLocation();
   const { user, profile, isAdmin, signOut } = useAuth();
   const { settings } = useSettings();
-  const { wallet } = useWallet();
 
   useEffect(() => {
     setUserMenuOpen(false);
@@ -137,6 +136,8 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
           )}
         </Link>
 
+        <SiteNavigation />
+
         {/* Search bar - center/flexible */}
         <form onSubmit={handleSearch} className="ml-auto hidden flex-1 max-w-xs sm:block md:flex md:max-w-sm">
           <div ref={searchWrapperRef} className="group relative w-full">
@@ -192,16 +193,6 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
 
         {/* User profile - right side */}
         <div className="ml-auto flex items-center gap-2 sm:ml-0">
-          {user && wallet && (
-            <Link
-              to="/profile#wallet"
-              className="flex h-10 max-w-[112px] items-center gap-1.5 rounded-btn border border-gold/25 bg-gold/5 px-2.5 text-xs font-semibold text-gold transition-all duration-300 hover:border-gold/50 hover:bg-gold/10 active:scale-95 sm:max-w-none sm:px-3 sm:text-sm"
-              title="Open wallet"
-            >
-              <WalletIcon className="h-4 w-4 shrink-0" />
-              <span className="truncate">৳{formatCurrency(wallet.available_balance)}</span>
-            </Link>
-          )}
           {user ? (
             <div className="relative">
               <button

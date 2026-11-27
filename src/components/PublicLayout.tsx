@@ -10,7 +10,7 @@ import { useAuth } from '@/context/AuthContext';
 
 export default function PublicLayout() {
   const { settings } = useSettings();
-  const { user, isAdmin, loading } = useAuth();
+  const { isAdmin, loading } = useAuth();
   const navigate = useNavigate();
   const [maintenanceChecked, setMaintenanceChecked] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -38,7 +38,7 @@ export default function PublicLayout() {
     <div className="flex min-h-screen flex-col bg-dark-bg">
       <Navbar onMenuClick={openSidebar} />
       <CategorySidebar open={sidebarOpen} onClose={closeSidebar} />
-      <main className="flex-1">
+      <main className="flex-1 pb-24 lg:pb-0">
         <Outlet />
       </main>
       <Footer footerText={settings?.footer_text} />
